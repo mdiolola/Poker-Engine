@@ -51,7 +51,6 @@ namespace UnitTest_Engine
                 Assert.IsTrue(game.AddPlayer(p, out var message), message);
             }
 
-
             var winners = game.Winners;
 
             Assert.True(winners[0].Name == "Jen");
@@ -81,7 +80,6 @@ namespace UnitTest_Engine
             Assert.True(winners.Count == 2);
 
         }
-
 
         [Test]
         public void DuplicateCardWithOtherPlayer()

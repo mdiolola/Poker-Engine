@@ -10,10 +10,8 @@ namespace PokerEngine.Service
     public static class DeckService
     {
         private const bool Y = true;
-
         private const int rankMask = 0b11_1111_1111_1111;
         private const int suitMask = 0b1111 << 14;
-
         private static readonly Card[] deck = (from suit in Range(1, 4) from rank in Range(1, 13) select new Card(rank, suit)).ToArray();
 
         public static Hand Analyze(string[] cards)
@@ -63,13 +61,12 @@ namespace PokerEngine.Service
             _ => -1
         };
 
-
-        public static CompareHand CompareCardInHands(string[] player1, string[] player2, Hand hand)
+        public static CompareHand CompareCard(string[] player1, string[] player2, Hand hand)
         {
-            return CompareHands(ParseCards(player1), ParseCards(player2), hand);
+            return CompareHandsRecursive(ParseCards(player1), ParseCards(player2), hand);
         }
 
-        static CompareHand CompareHands(List<Card> player1, List<Card> player2, Hand hand)
+        static CompareHand CompareHandsRecursive(List<Card> player1, List<Card> player2, Hand hand)
         {
             var p1 = GetHighCard(player1, hand);
             var p2 = GetHighCard(player2, hand);
@@ -82,7 +79,7 @@ namespace PokerEngine.Service
                 player1.RemoveAll(r => r.Rank == p1.Rank);
                 player2.RemoveAll(r => r.Rank == p2.Rank);
 
-                return CompareHands(player1, player2, hand);
+                return CompareHandsRecursive(player1, player2, hand);
             }
 
             return CompareHand.Equal;

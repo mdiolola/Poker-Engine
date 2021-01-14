@@ -11,6 +11,8 @@ namespace UnitTest_Engine
         [Test]
         public void HandRanks()
         {
+            // Validate all Hands type are acceptable 
+
             var players = new List<Player>
             {
                 new Player { Name = "RoyalFlush"    , Cards = new string[]{ "KS", "QS", "JS", "AS", "10S"   } },
@@ -28,7 +30,6 @@ namespace UnitTest_Engine
             for (var i = 0; i < players.Count; i++)
             {
                 players[i].Hand = DeckService.Analyze(players[i].Cards );
-
                 Assert.AreEqual(i, (int)players[i].Hand);
             }
         }
@@ -37,13 +38,13 @@ namespace UnitTest_Engine
         public void CompareHands()
         {
             // validate draw/equal cards
-            Assert.AreEqual(DeckService.CompareCardInHands(new string[] { "AH", "KH", "QH", "JH", "10H" }, new string[] { "10D", "JD", "QD", "KD", "AD" }, Deck.Hand.RoyalFlush), Deck.CompareHand.Equal);
+            Assert.AreEqual(DeckService.CompareCard(new string[] { "AH", "KH", "QH", "JH", "10H" }, new string[] { "10D", "JD", "QD", "KD", "AD" }, Deck.Hand.RoyalFlush), Deck.CompareHand.Equal);
 
             // validate higher card
-            Assert.AreEqual(DeckService.CompareCardInHands(new string[] { "AH", "KH", "QH", "JH", "10H" }, new string[] { "10D", "JD", "QD", "KD", "9D" }, Deck.Hand.RoyalFlush), Deck.CompareHand.Higher);
+            Assert.AreEqual(DeckService.CompareCard(new string[] { "AH", "KH", "QH", "JH", "10H" }, new string[] { "10D", "JD", "QD", "KD", "9D" }, Deck.Hand.RoyalFlush), Deck.CompareHand.Higher);
 
             // validate lower card
-            Assert.AreEqual(DeckService.CompareCardInHands(new string[] { "9h", "Kh", "Qh", "Jh", "10h" }, new string[] { "10D", "JD", "QD", "KD", "AD" }, Deck.Hand.RoyalFlush), Deck.CompareHand.Lower);
+            Assert.AreEqual(DeckService.CompareCard(new string[] { "9h", "Kh", "Qh", "Jh", "10h" }, new string[] { "10D", "JD", "QD", "KD", "AD" }, Deck.Hand.RoyalFlush), Deck.CompareHand.Lower);
         }
 
         [Test]
@@ -56,8 +57,6 @@ namespace UnitTest_Engine
             // duplicate cards in hand
             var invalid2 = DeckService.Analyze(new string[] { "JD" , "10S", "9h", "10c", "9H"});
             Assert.AreEqual(Deck.Hand.Invalid, invalid2);
-
-
         }
 
     }

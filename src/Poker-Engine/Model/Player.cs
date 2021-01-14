@@ -11,6 +11,5 @@ namespace PokerEngine.Model
         public string[] Cards { get; set; }
 
         public Deck.Hand Hand { get; set; }
-
     }
 }

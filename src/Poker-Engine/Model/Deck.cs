@@ -27,6 +27,5 @@ namespace PokerEngine.Model
             Lower,
             Equal
         }
-
     }
 }
